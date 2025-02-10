@@ -11,4 +11,20 @@ class ReviewController extends Controller
     {
         return view('reviews.index')->with(['posts' => $post->get()]);
     }
+
+    public function create()
+    {
+        return view('reviews.create');
+    }
+    public function store(Request $request, Review $post)
+    {
+        $input = $request->all();
+        $input['user_id'] = auth()->id();
+        $post->fill($input)->save();
+        return redirect('/posts/' . $post->id);
+    }
+    public function show(Review $post)
+    {
+        return view('reviews.show')->with(['post' => $post]);
+    }
 }

@@ -20,8 +20,11 @@ Route::get('/', function () {
 });
 
 Route::get('/posts', [ReviewController::class, 'index']);
-
 Route::get('/', [ReviewController::class, 'index']);
+Route::get('/posts/create', [ReviewController::class, 'create']);
+Route::get('/posts', [ReviewController::class, 'store']);
+Route::post('/posts', [ReviewController::class, 'store'])->name('posts.store');
+Route::get('/posts/{post}', [ReviewController::class, 'show']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
