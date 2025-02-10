@@ -21,6 +21,8 @@ Route::get('/', function () {
 
 Route::get('/posts', [ReviewController::class, 'index']);
 
+Route::get('/', [ReviewController::class, 'index']);
+
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');

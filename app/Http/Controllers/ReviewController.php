@@ -9,6 +9,6 @@ class ReviewController extends Controller
 {
     public function index(Review $post)
     {
-        return $post->get();
+        return view('reviews.index')->with(['posts' => $post->get()]);
     }
 }
