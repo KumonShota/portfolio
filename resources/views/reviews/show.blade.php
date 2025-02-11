@@ -22,6 +22,7 @@
     <div class="footer">
         <a href="/">戻る</a>
     </div>
+    <div class="edit"><a href="/posts/{{ $post->id }}/edit">口コミを編集する</a></div>
 </body>
 
 </html>

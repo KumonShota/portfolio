@@ -25,6 +25,8 @@ Route::get('/posts/create', [ReviewController::class, 'create']);
 Route::get('/posts', [ReviewController::class, 'store']);
 Route::post('/posts', [ReviewController::class, 'store'])->name('posts.store');
 Route::get('/posts/{post}', [ReviewController::class, 'show']);
+Route::get('/posts/{post}/edit', [ReviewController::class, 'edit']);
+Route::put('/posts/{post}', [ReviewController::class, 'update']);
 
 Route::get('/dashboard', function () {
     return view('dashboard');
