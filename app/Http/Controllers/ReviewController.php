@@ -40,4 +40,9 @@ class ReviewController extends Controller
 
         return redirect('/posts/' . $post->id);
     }
+    public function delete(Review $post)
+    {
+        $post->delete();
+        return redirect('/');
+    }
 }
