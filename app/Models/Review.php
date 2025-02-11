@@ -16,4 +16,14 @@ class Review extends Model
         'body',
         'user_id',
     ];
+
+    public function favorites()
+    {
+        return $this->hasMany(Favorite::class);
+    }
+
+    public function isFavoritedByUser()
+    {
+        return $this->favorites()->where('user_id', auth()->id())->exists();
+    }
 }

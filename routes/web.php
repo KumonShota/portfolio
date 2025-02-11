@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
+use App\Models\Review;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -28,6 +29,7 @@ Route::get('/posts/{post}', [ReviewController::class, 'show']);
 Route::get('/posts/{post}/edit', [ReviewController::class, 'edit']);
 Route::put('/posts/{post}', [ReviewController::class, 'update']);
 Route::delete('/poosts/{post})', [ReviewController::class, 'delete']);
+Route::get('/', [ReviewController::class, 'index'])->name('index');
 
 Route::get('/dashboard', function () {
     return view('dashboard');

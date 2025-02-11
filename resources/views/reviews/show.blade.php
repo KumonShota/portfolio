@@ -8,21 +8,26 @@
     <!-- Fonts -->
     <link href="https://fonts.googleapis.com/css?family=Nunito:500,600" rel="stylesheet">
 </head>
+<x-app-layout>
+    <x-slot name="header">
+        ラーメン好きのための口コミアプリ
+    </x-slot>
 
-<body>
-    <h1 class="title">
-        {{ $post->title }}
-    </h1>
-    <div class="content">
-        <div class="content__post">
-            <h3>本文</h3>
-            <p>{{ $post->body }}</p>
+    <body>
+        <h1 class="title">
+            {{ $post->title }}
+        </h1>
+        <div class="content">
+            <div class="content__post">
+                <h3>本文</h3>
+                <p>{{ $post->body }}</p>
+            </div>
         </div>
-    </div>
-    <div class="footer">
-        <a href="/">戻る</a>
-    </div>
-    <div class="edit"><a href="/posts/{{ $post->id }}/edit">口コミを編集する</a></div>
-</body>
+        <div class="footer">
+            <a href="/">戻る</a>
+        </div>
+        <div class="edit"><a href="/posts/{{ $post->id }}/edit">口コミを編集する</a></div>
+    </body>
+</x-app-layout>
 
 </html>
