@@ -15,6 +15,7 @@ class Review extends Model
         'title',
         'body',
         'user_id',
+        'store_id'
     ];
 
     public function favorites()
@@ -25,5 +26,9 @@ class Review extends Model
     public function isFavoritedByUser()
     {
         return $this->favorites()->where('user_id', auth()->id())->exists();
+    }
+    public function user()
+    {
+        return $this->belongsTo(User::class);
     }
 }

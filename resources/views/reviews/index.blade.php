@@ -29,12 +29,13 @@
                     <button
                         class="favorite-button"
                         data-review-id="{{ $post->id}}"
-                        data-favorited="{{ $post->isFavoritedByuser () ? 'true' :'false' }}">
+                        data-favorited="{{ $post->isFavoritedByUser() ? 'true' :'false' }}">
                         {{$post->isFavoritedByUser() ? '💔 お気に入り解除' : '⭐ お気に入り' }}
                     </button>
-                    <span class="favotite-count">{{$post->favorites->count() }}</span>
+                    <span class="favorite-count">{{ $post->favorites->count() }}</span>
                 </div>
-                <form action="/posts/{{$post->id}}" id="form\{{$post->id}}" method="post">
+                <form action="/posts/{{ $post->id }}" id="form_{{ $post->id }}" method="post">
+
                     @csrf
                     @method('DELETE')
                     <button type="button" onclick="deletePost({{ $post->id}})">口コミを削除する</button>
@@ -42,7 +43,6 @@
             </div>
             @endforeach
         </div>
-
 
         <script>
             function deletePost(id) {
@@ -54,5 +54,6 @@
             }
         </script>
 </x-app-layout>
+</body>
 
 </html>

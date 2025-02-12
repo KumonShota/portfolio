@@ -22,6 +22,7 @@ class ReviewController extends Controller
     {
         $input = $request->all();
         $input['user_id'] = auth()->id();
+        $input['store_id'] = $request->store_id ?? null;
         $post->fill($input)->save();
         return redirect('/posts/' . $post->id);
     }
