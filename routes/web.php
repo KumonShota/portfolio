@@ -2,43 +2,43 @@
 
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
-use App\Models\Review;
-use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\FavoriteController;
+use Illuminate\Support\Facades\Route;
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
 |
-| Here is where you can register web routes for your application. These
-| routes are loaded by the RouteServiceProvider and all of them will
-| be assigned to the "web" middleware group. Make something great!
+| ここにアプリケーションのWebルートを登録します。
+| これらのルートは RouteServiceProvider によってロードされ、
+| すべて「web」ミドルウェアグループにアサインされます。
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
-});
-Route::group(['middleware' => ['auth']], function () {
-    Route::get('/posts', [ReviewController::class, 'index']);
-    Route::get('/', [ReviewController::class, 'index']);
-    Route::get('/posts/create', [ReviewController::class, 'create']);
-    Route::get('/posts', [ReviewController::class, 'store']);
-    Route::post('/posts', [ReviewController::class, 'store'])->name('posts.store');
-    Route::get('/posts/{post}', [ReviewController::class, 'show']);
-    Route::get('/posts/{post}/edit', [ReviewController::class, 'edit']);
-    Route::put('/posts/{post}', [ReviewController::class, 'update']);
-    Route::delete('/poosts/{post})', [ReviewController::class, 'delete']);
-    Route::get('/', [ReviewController::class, 'index'])->name('index')->middleware('auth');
-    Route::middleware(['auth'])->group(function () {
-        Route::post('/posts/{post}/favorite', [FavoriteController::class, 'store'])->name('reviews.favorite');
-        Route::delete('/posts/{post}/favorite', [FavoriteController::class, 'destroy'])->name('reviews.unfavorite');
-    });
+Route::get('/', [ReviewController::class, 'index'])->name('index');
 
+Route::group(['middleware' => ['auth']], function () {
+    // レビュー関連のルート
+    Route::get('/reviews', [ReviewController::class, 'index'])->name('reviews.index');
+    Route::get('/reviews/create', [ReviewController::class, 'create'])->name('reviews.create');
+    Route::post('/reviews', [ReviewController::class, 'store'])->name('reviews.store');
+    Route::get('/reviews/{review}', [ReviewController::class, 'show'])->name('reviews.show');
+    Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
+    Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
+    Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    // お気に入り機能のルート
+    Route::post('/reviews/{review}/favorite', [FavoriteController::class, 'store'])->name('reviews.favorite');
+    Route::delete('/reviews/{review}/favorite', [FavoriteController::class, 'destroy'])->name('reviews.unfavorite');
+
+    // ダッシュボード
     Route::get('/dashboard', function () {
         return view('dashboard');
     })->middleware(['auth', 'verified'])->name('dashboard');
 });
+
+// プロフィール関連のルート
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
