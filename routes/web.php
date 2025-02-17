@@ -30,7 +30,7 @@ Route::group(['middleware' => ['auth']], function () {
 
     // お気に入り機能のルート
     Route::post('/reviews/{review}/favorite', [FavoriteController::class, 'store'])->name('reviews.favorite');
-    Route::delete('/reviews/{review}/favorite', [FavoriteController::class, 'destroy'])->name('reviews.unfavorite');
+    Route::post('/reviews/{review}/unfavorite', [FavoriteController::class, 'destroy'])->name('reviews.unfavorite');
 
     // ダッシュボード
     Route::get('/dashboard', function () {

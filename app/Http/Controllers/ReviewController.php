@@ -32,7 +32,7 @@ class ReviewController extends Controller
 
     public function show(Review $review)
     {
-        return view('reviews.show')->with(['review' => $review]);
+        return view('reviews.show', compact('review'))->with(['review' => $review]);
     }
 
     public function edit(Review $review)

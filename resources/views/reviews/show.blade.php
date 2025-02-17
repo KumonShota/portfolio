@@ -24,6 +24,11 @@
                 <p>{{ $review->body }}</p>
             </div>
         </div>
+        <h2>投稿者の情報</h2>
+        <p>投稿者名: {{ $review->user->name }}</p>
+
+        <h2>お店の情報</h2>
+        <p>店舗名: {{ $review->store->name }}</p>
         <div class="footer">
             <a href="/">戻る</a>
         </div>

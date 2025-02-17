@@ -22,19 +22,25 @@
         <div class='reviews'>
             @foreach($reviews as $review)
             <div class='review'>
-                <h2 class='title'>
-                    <a href="/reviews/{{ $review->id }}">{{ $review->title }}</a>
+                <h2 class='title'>{{$review->title}}
+                    <a href="/reviews/{{ $review->id }}">詳細</a>
                 </h2>
                 <p class='body'>{{ $review->body }}</p>
                 <div class="favorite-section">
-                    <button
-                        class="favorite-button"
-                        data-review-id="{{ $review->id }}"
-                        data-favorited="{{ $review->isFavoritedByUser() ? 'true' : 'false' }}">
-                        {{ $review->isFavoritedByUser() ? '💔 お気に入り解除' : '⭐ お気に入り' }}
-                    </button>
-                    <span class="favorite-count">{{ $review->favorites->count() }}</span>
+                    @if($review->isFavoritedByUser())
+                    <form action="{{ route('reviews.unfavorite', ['review' => $review->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit">💔 お気に入り解除</button>
+                    </form>
+                    @else
+                    <form action="{{ route('reviews.favorite', ['review' => $review->id]) }}" method="POST">
+                        @csrf
+                        <button type="submit">⭐ お気に入り</button>
+                    </form>
+                    @endif
                 </div>
+
+                <p>お気に入り数: {{ $review->favorites->count() }}</p>
                 <form action="/reviews/{{ $review->id }}" id="form_{{ $review->id }}" method="post">
                     @csrf
                     @method('DELETE')
