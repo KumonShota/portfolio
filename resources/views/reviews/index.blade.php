@@ -16,9 +16,7 @@
     <body>
         <a href='/reviews/create'>口コミを投稿する</a>
         <h1>口コミ一覧</h1>
-        <p style="text-align: right">
-            <a href='/reviews/mypage'>マイページ</a>
-        </p>
+
         <div class='reviews'>
             @foreach($reviews as $review)
             <div class='review'>
