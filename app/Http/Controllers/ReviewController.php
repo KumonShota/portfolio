@@ -4,15 +4,23 @@ namespace App\Http\Controllers;
 
 use App\Models\Review;
 use App\Http\Requests\ReviewRequest;
+use App\Models\Region;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
+
 class ReviewController extends Controller
 {
-    public function index(Review $review)
+    public function index()
     {
-        return view('reviews.index')->with(['reviews' => $review->all()]);
+        $reviews = Review::all();
+        $regions = Region::all();
+
+        return view('reviews.index', compact('reviews', 'regions'));
     }
+
+
+
 
     public function create()
     {

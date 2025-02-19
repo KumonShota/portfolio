@@ -9,10 +9,14 @@ class Store extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['name', 'address', 'phone'];
+    protected $fillable = ['name', 'region_id'];
 
     public function reviews()
     {
         return $this->hasMany(Review::class);
+    }
+    public function region()
+    {
+        return $this->belongsTo(Region::class);
     }
 }

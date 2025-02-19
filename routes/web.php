@@ -1,9 +1,11 @@
 <?php
 
+use App\Http\Controllers\RegionController;
 use App\Http\Controllers\ReviewController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\FavoriteController;
 use Illuminate\Support\Facades\Route;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -27,6 +29,11 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/reviews/{review}/edit', [ReviewController::class, 'edit'])->name('reviews.edit');
     Route::put('/reviews/{review}', [ReviewController::class, 'update'])->name('reviews.update');
     Route::delete('/reviews/{review}', [ReviewController::class, 'destroy'])->name('reviews.destroy');
+
+    //地方関連のルート
+    Route::get('/regions', [RegionController::class, 'index'])->name('regions.index');
+    Route::get('/regions/{region}', [RegionController::class, 'show'])->name('regions.show');
+
 
     // お気に入り機能のルート
     Route::post('/reviews/{review}/favorite', [FavoriteController::class, 'store'])->name('reviews.favorite');

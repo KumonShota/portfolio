@@ -14,6 +14,17 @@
     </x-slot>
 
     <body>
+
+        <h1>地方一覧</h1>
+        <ul>
+            @foreach($regions as $region)
+            <li>
+                <a href="{{ route('regions.show', $region->id) }}">
+                    {{ $region->name }}
+                </a>
+            </li>
+            @endforeach
+        </ul>
         <a href='/reviews/create'>口コミを投稿する</a>
         <h1>口コミ一覧</h1>
 
@@ -21,9 +32,11 @@
             @foreach($reviews as $review)
             <div class='review'>
                 <h2 class='title'>{{$review->title}}
-                    <a href="/reviews/{{ $review->id }}">詳細</a>
+                    （店舗名: {{ $review->store->name }}）
+
                 </h2>
                 <p class='body'>{{ $review->body }}</p>
+                <a href="/reviews/{{ $review->id }}">詳細</a>
                 <div class="favorite-section">
                     @if($review->isFavoritedByUser())
                     <form action="{{ route('reviews.unfavorite', ['review' => $review->id]) }}" method="POST">

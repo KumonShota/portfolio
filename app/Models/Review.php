@@ -35,4 +35,15 @@ class Review extends Model
     {
         return $this->belongsTo(Store::class);
     }
+    public function region()
+    {
+        return $this->hasOneThrough(
+            Region::class, // 取得したいモデル
+            Store::class,  // 経由するモデル
+            'id',          // stores.id（お店の ID）
+            'id',          // regions.id（地方の ID）
+            'store_id',    // reviews.store_id（レビューの店舗 ID）
+            'region_id'    // stores.region_id（店舗の地方 ID）
+        );
+    }
 }
