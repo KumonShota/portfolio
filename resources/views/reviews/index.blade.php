@@ -45,17 +45,17 @@
                     @if($review->isFavoritedByUser())
                     <form action="{{ route('reviews.unfavorite', ['review' => $review->id]) }}" method="POST">
                         @csrf
-                        <button type="submit">💔 お気に入り解除</button>
+                        <button type="submit">⭐</button>
                     </form>
                     @else
                     <form action="{{ route('reviews.favorite', ['review' => $review->id]) }}" method="POST">
                         @csrf
-                        <button type="submit">⭐ お気に入り</button>
+                        <button type="submit">☆</button>
                     </form>
                     @endif
                 </div>
 
-                <p>お気に入り数: {{ $review->favorites->count() }}</p>
+                <p>: {{ $review->favorites->count() }}</p>
                 <form action="/reviews/{{ $review->id }}" id="form_{{ $review->id }}" method="post">
                     @csrf
                     @method('DELETE')
