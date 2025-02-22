@@ -21,7 +21,25 @@ class User extends Authenticatable
         'name',
         'email',
         'password',
+        'gender',
+        'image',
     ];
+    public function following()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'follower_id', 'followed_id');
+    }
+
+    // ✅ フォロワー（自分をフォローしているユーザー）
+    public function followers()
+    {
+        return $this->belongsToMany(User::class, 'follows', 'followed_id', 'follower_id');
+    }
+
+    // ✅ 投稿したレビュー
+    public function reviews()
+    {
+        return $this->hasMany(Review::class);
+    }
 
     /**
      * The attributes that should be hidden for serialization.

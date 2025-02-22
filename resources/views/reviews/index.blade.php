@@ -31,7 +31,11 @@
         <div class='reviews'>
             @foreach($reviews as $review)
             <div class='review'>
-                <h2 class='title'>{{$review->title}}
+                <h2 class='title'>
+                    <a href="{{ route('users.show', $review->user->id) }}">
+                        {{ $review->user->name }}
+                    </a>
+                    - {{ $review->title }}
                     （店舗名: {{ $review->store->name }}）
 
                 </h2>
