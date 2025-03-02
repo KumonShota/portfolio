@@ -11,18 +11,19 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('regions', function (Blueprint $table) {
-            $table->id();
-            $table->string('name');
-            $table->timestamps();
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->integer('stars')->default(0)->change(); // ✅ デフォルト値を0に設定
         });
     }
+
 
     /**
      * Reverse the migrations.
      */
     public function down(): void
     {
-        Schema::dropIfExists('regions_tabl');
+        Schema::table('reviews', function (Blueprint $table) {
+            $table->integer('stars')->default(null)->change(); // 元に戻す
+        });
     }
 };

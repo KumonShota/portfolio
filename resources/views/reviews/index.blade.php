@@ -32,15 +32,15 @@
             @foreach($reviews as $review)
             <div class='review'>
                 <h2 class='title'>
-                    <a href="{{ route('users.show', $review->user->id) }}">
+                    {{ $review->title }}
+                    - <a href="{{ route('users.show', $review->user->id) }}">
                         {{ $review->user->name }}
                     </a>
-                    - {{ $review->title }}
                     （店舗名: {{ $review->store->name }}）
-
                 </h2>
                 <p class='body'>{{ $review->body }}</p>
                 <a href="/reviews/{{ $review->id }}">詳細</a>
+
                 <div class="favorite-section">
                     @if($review->isFavoritedByUser())
                     <form action="{{ route('reviews.unfavorite', ['review' => $review->id]) }}" method="POST">
@@ -56,11 +56,15 @@
                 </div>
 
                 <p>: {{ $review->favorites->count() }}</p>
+
+                <!-- ✅ 投稿者のみ削除ボタンを表示 -->
+                @if(Auth::check() && Auth::id() === $review->user_id)
                 <form action="/reviews/{{ $review->id }}" id="form_{{ $review->id }}" method="post">
                     @csrf
                     @method('DELETE')
                     <button type="button" onclick="deleteReview({{ $review->id }})">口コミを削除する</button>
                 </form>
+                @endif
             </div>
             @endforeach
         </div>

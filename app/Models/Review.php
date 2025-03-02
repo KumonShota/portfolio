@@ -46,4 +46,8 @@ class Review extends Model
             'region_id'    // stores.region_id（店舗の地方 ID）
         );
     }
+    public function comments()
+    {
+        return $this->hasMany(Comment::class)->whereNull('parent_id')->orderBy('created_at', 'desc'); // 新しい順、親コメントのみ取得
+    }
 }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Review;
 use App\Http\Requests\ReviewRequest;
 use App\Models\Region;
+use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -22,20 +23,35 @@ class ReviewController extends Controller
 
 
 
-    public function create()
+    public function create(Request $request)
     {
-        return view('reviews.create');
+        $store_id = $request->query('store_id');
+        $store = Store::find($store_id);
+
+        if (!$store) {
+            return redirect()->route('stores.index')->with('error', 'お店を選択してください');
+        }
+
+        return view('reviews.create', compact('store'));
     }
 
-    public function store(ReviewRequest $request)
+    public function store(Request $request)
     {
-        $input = $request->validated();
-        $input['user_id'] = Auth::id();
-        $input['store_id'] = $request->store_id ?? null;
+        $request->validate([
+            'review.title' => 'required|string|max:255',
+            'review.body' => 'required|string',
+            'review.store_id' => 'required|exists:stores,id',
+        ]);
 
-        $review = Review::create($input);
+        Review::create([
+            'title' => $request->input('review.title'),
+            'body' => $request->input('review.body'),
+            'store_id' => $request->input('review.store_id'),
+            'user_id' => auth()->id(),
+            'stars' => $request->input('review.stars', 0),
+        ]);
 
-        return redirect('/reviews/' . $review->id)->with('success', 'レビューを投稿しました');
+        return redirect()->route('reviews.index')->with('success', 'レビューを投稿しました！');
     }
 
     public function show(Review $review)
