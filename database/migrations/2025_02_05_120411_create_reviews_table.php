@@ -19,6 +19,7 @@ return new class extends Migration
             $table->text('body');
             $table->integer('stars');
             $table->timestamps();
+            $table->string('image_url')->nullable()->change();
             $table->softDeletes();
         });
     }

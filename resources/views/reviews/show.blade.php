@@ -23,6 +23,9 @@
                 <h3>本文</h3>
                 <p>{{ $review->body }}</p>
             </div>
+            <div>
+                <img src="{{ $review->image_path }}" alt="画像が読み込めません。">
+            </div>
         </div>
         <h2>投稿者の情報</h2>
         <p>投稿者名: <a href="{{ route('users.show', $review->user->id) }}">

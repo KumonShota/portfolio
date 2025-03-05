@@ -15,7 +15,8 @@ class Review extends Model
         'title',
         'body',
         'user_id',
-        'store_id'
+        'store_id',
+        'image_url',
     ];
 
     public function favorites()

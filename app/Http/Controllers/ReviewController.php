@@ -9,7 +9,8 @@ use App\Models\Store;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
-
+use CloudinaryLabs\CloudinaryLaravel\Facades\Cloudinary;
+use Illuminate\Support\Facades\Log;
 
 class ReviewController extends Controller
 {
@@ -38,25 +39,26 @@ class ReviewController extends Controller
 
     public function store(Request $request)
     {
+
         $request->validate([
             'review.title' => 'required|string|max:255',
             'review.body' => 'required|string',
             'review.store_id' => 'required|exists:stores,id',
-            'review.image' => 'nullable|image|mimes:jpeg,png,gif|max:10240',
+            'image' => 'nullable|image|mimes:jpeg,png,gif|max:10240',
         ]);
 
-        $imagePath = null;
-        if ($request->hasFile('review.image')) {
-            $imagePath = $request->file('review.image')->store('reviews', 'public'); // ✅ `storage/app/public/reviews/` に保存
-        }
+        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
 
-        Review::create([
+
+        $input = $request['review'];
+
+        $review = Review::create([
             'title' => $request->input('review.title'),
             'body' => $request->input('review.body'),
             'store_id' => $request->input('review.store_id'),
             'user_id' => auth()->id(),
             'stars' => $request->input('review.stars', 0),
-            'image_path' => $imagePath,
+            'image_url' => $image_url,
         ]);
 
         return redirect()->route('reviews.index')->with('success', 'レビューを投稿しました！');

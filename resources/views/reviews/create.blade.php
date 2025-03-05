@@ -14,6 +14,7 @@
     <body>
         <h1>口コミタイトル</h1>
         <form action="{{ route('reviews.store') }}" method="POST" enctype="multipart/form-data">
+
             @csrf
             <input type="hidden" name="review[store_id]" value="{{ $store->id }}">
 
@@ -37,9 +38,10 @@
 
             <div class="image">
                 <h2>画像をアップロード</h2>
-                <input type="file" name="review[image]" accept="image/*">
-                <p class="image__error">{{ $errors->first('review.image') }}</p>
+                <input type="file" name="image">
+                <p class="image__error">{{ $errors->first('image') }}</p>
             </div>
+
 
             <input type="submit" value="保存" />
         </form>

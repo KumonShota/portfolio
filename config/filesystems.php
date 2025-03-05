@@ -27,6 +27,14 @@ return [
     | Supported Drivers: "local", "ftp", "sftp", "s3"
     |
     */
+    'default' => env('FILESYSTEM_DISK', 'local'),
+
+    'cloudinary' => [
+        'driver'  => 'cloudinary',
+        'api_key' => env('754429784185186'),
+        'api_secret' => env('pwOpsCvBowmwhnprWzMwyLzupTAS'),
+        'cloud_name' => env('key'),
+    ],
 
     'disks' => [
 
@@ -39,7 +47,7 @@ return [
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
-            'url' => env('APP_URL').'/storage',
+            'url' => env('APP_URL') . '/storage',
             'visibility' => 'public',
             'throw' => false,
         ],
