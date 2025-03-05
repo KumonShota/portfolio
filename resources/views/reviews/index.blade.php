@@ -39,7 +39,12 @@
                     （店舗名: {{ $review->store->name }}）
                 </h2>
                 <p class='body'>{{ $review->body }}</p>
-                <a href="/reviews/{{ $review->id }}">詳細</a>
+
+                @if($review->image_path)
+                <img src="{{ asset('storage/' . $review->image_path) }}" alt="レビュー画像" style="max-width: 300px;">
+                @endif
+
+                <a href="/reviews/{{ $review->id }}">詳細を見る</a>
 
                 <div class="favorite-section">
                     @if($review->isFavoritedByUser())

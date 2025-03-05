@@ -7,6 +7,7 @@ use App\Http\Requests\ReviewRequest;
 use App\Models\Region;
 use App\Models\Store;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
 
@@ -41,7 +42,13 @@ class ReviewController extends Controller
             'review.title' => 'required|string|max:255',
             'review.body' => 'required|string',
             'review.store_id' => 'required|exists:stores,id',
+            'review.image' => 'nullable|image|mimes:jpeg,png,gif|max:10240',
         ]);
+
+        $imagePath = null;
+        if ($request->hasFile('review.image')) {
+            $imagePath = $request->file('review.image')->store('reviews', 'public'); // ✅ `storage/app/public/reviews/` に保存
+        }
 
         Review::create([
             'title' => $request->input('review.title'),
@@ -49,6 +56,7 @@ class ReviewController extends Controller
             'store_id' => $request->input('review.store_id'),
             'user_id' => auth()->id(),
             'stars' => $request->input('review.stars', 0),
+            'image_path' => $imagePath,
         ]);
 
         return redirect()->route('reviews.index')->with('success', 'レビューを投稿しました！');

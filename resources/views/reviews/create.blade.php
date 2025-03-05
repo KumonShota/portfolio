@@ -13,7 +13,7 @@
 
     <body>
         <h1>口コミタイトル</h1>
-        <form action="{{ route('reviews.store') }}" method="POST">
+        <form action="{{ route('reviews.store') }}" method="POST" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="review[store_id]" value="{{ $store->id }}">
 
@@ -33,6 +33,12 @@
                 <h2>Body</h2>
                 <textarea name="review[body]" placeholder="ここに内容を入力">{{ old('review.body') }}</textarea>
                 <p class="body__error">{{ $errors->first('review.body') }}</p>
+            </div>
+
+            <div class="image">
+                <h2>画像をアップロード</h2>
+                <input type="file" name="review[image]" accept="image/*">
+                <p class="image__error">{{ $errors->first('review.image') }}</p>
             </div>
 
             <input type="submit" value="保存" />
