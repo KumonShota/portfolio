@@ -49,8 +49,7 @@ class ReviewController extends Controller
         // 画像がアップロードされている場合はCloudinaryにアップロード
         if ($request->hasFile('image')) {
             $uploadResponse = Cloudinary::upload($request->file('image')->getRealPath());
-            $data['image_url'] = $uploadResponse['secure_url'];
-            $data['image_public_id'] = $uploadResponse['public_id'];
+            $data['image_url'] = $uploadResponse->getSecurePath();
         }
 
         // ログインユーザーのIDを追加
@@ -80,15 +79,20 @@ class ReviewController extends Controller
 
         // 画像がアップロードされている場合
         if ($request->hasFile('image')) {
-            // 既に画像が設定されている場合、Cloudinaryから削除
-            if ($review->image_public_id) {
-                Cloudinary::destroy($review->image_public_id);
+            // 既に画像が設定されている場合、URLから public_id を抽出して Cloudinary から削除
+            if ($review->image_url) {
+                // 例: https://res.cloudinary.com/dcp7ygojd/image/upload/v1741409865/orgquflk9bmz8cgfp50y.png
+                $path = parse_url($review->image_url, PHP_URL_PATH); // "/dcp7ygojd/image/upload/v1741409865/orgquflk9bmz8cgfp50y.png"
+                $segments = explode('/', $path);
+                $filename = end($segments); // "orgquflk9bmz8cgfp50y.png"
+                $publicId = pathinfo($filename, PATHINFO_FILENAME); // "orgquflk9bmz8cgfp50y"
+
+                Cloudinary::destroy($publicId);
             }
 
-            // 新しい画像をCloudinaryにアップロードし、画像URLとpublic idを取得
+            // 新しい画像を Cloudinary にアップロードし、画像URLを取得
             $uploadResponse = Cloudinary::upload($request->file('image')->getRealPath());
-            $data['image_url'] = $uploadResponse['secure_url'];
-            $data['image_public_id'] = $uploadResponse['public_id'];
+            $data['image_url'] = $uploadResponse->getSecurePath();
         }
 
         $review->update($data);
