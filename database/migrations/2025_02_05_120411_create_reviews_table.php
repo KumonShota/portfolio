@@ -19,7 +19,7 @@ return new class extends Migration
             $table->text('body');
             $table->integer('stars');
             $table->string('image_url')->nullable()->change();
-            $table->integer('image_public_id')->nullable();
+            $table->string('image_public_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
         });
