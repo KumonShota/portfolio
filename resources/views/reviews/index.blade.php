@@ -46,8 +46,8 @@
                         <span class="text-sm text-gray-600">（店舗名: {{ $review->store->name }}）</span>
                     </h2>
                     <p class="body text-gray-700 mb-4">{{ $review->body }}</p>
-                    @if($review->image_path)
-                    <img src="{{ $review->image_path }}" alt="レビュー画像" style="max-width: 300px;">
+                    @if($review->image_url)
+                    <img src="{{ $review->image_url }}" alt="レビュー画像" style="max-width: 300px;">
                     @endif
                     <div class="flex items-center justify-between">
                         <a href="/reviews/{{ $review->id }}" class="text-blue-500 hover:underline">

@@ -27,7 +27,7 @@
 
             <!-- 口コミ画像 -->
             <div class="mt-4">
-                <img src="{{ $review->image_path }}" alt="画像が読み込めません。" class="w-full h-auto rounded-lg shadow">
+                <img src="{{ $review->image_url }}" alt="画像が読み込めません。" class="w-full h-auto rounded-lg shadow">
             </div>
 
             <!-- 投稿者情報 -->
