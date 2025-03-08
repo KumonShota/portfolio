@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('title');
             $table->text('body');
             $table->integer('stars');
-            $table->string('image_url')->nullable()->change();
+            $table->string('image_url')->nullable();
             $table->string('image_public_id')->nullable();
             $table->timestamps();
             $table->softDeletes();
