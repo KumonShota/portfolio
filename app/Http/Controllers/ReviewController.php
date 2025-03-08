@@ -48,7 +48,9 @@ class ReviewController extends Controller
 
         // 画像がアップロードされている場合はCloudinaryにアップロード
         if ($request->hasFile('image')) {
-            $data['image_url'] = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $uploadResponse = Cloudinary::upload($request->file('image')->getRealPath());
+            $data['image_url'] = $uploadResponse->getSecurePath();
+            $data['image_public_id'] = $uploadResponse->getPublicId();
         }
 
         // ログインユーザーのIDを追加
@@ -76,16 +78,23 @@ class ReviewController extends Controller
         $validated = $request->validated();
         $data = $validated['review'];
 
-        // 画像がアップロードされている場合、Cloudinary にアップロードし、画像URLを設定
+        // 画像がアップロードされている場合
         if ($request->hasFile('image')) {
-            $data['image_url'] = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            // 既に画像が設定されている場合、Cloudinaryから削除
+            if ($review->image_public_id) {
+                Cloudinary::destroy($review->image_public_id);
+            }
+
+            // 新しい画像をCloudinaryにアップロードし、画像URLとpublic idを取得
+            $uploadResponse = Cloudinary::upload($request->file('image')->getRealPath());
+            $data['image_url'] = $uploadResponse->getSecurePath();
+            $data['image_public_id'] = $uploadResponse->getPublicId();
         }
 
         $review->update($data);
 
         return redirect('/reviews/' . $review->id)->with('success', 'レビューを更新しました');
     }
-
     public function destroy(Review $review)
     {
         $review->delete();
