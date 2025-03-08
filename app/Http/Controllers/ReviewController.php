@@ -72,8 +72,16 @@ class ReviewController extends Controller
 
     public function update(UpdateReviewRequest $request, Review $review)
     {
-        $input = $request->validated();
-        $review->update($input);
+        // バリデーション済みのデータから 'review' 配列を取得
+        $validated = $request->validated();
+        $data = $validated['review'];
+
+        // 画像がアップロードされている場合、Cloudinary にアップロードし、画像URLを設定
+        if ($request->hasFile('image')) {
+            $data['image_url'] = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        }
+
+        $review->update($data);
 
         return redirect('/reviews/' . $review->id)->with('success', 'レビューを更新しました');
     }

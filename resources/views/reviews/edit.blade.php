@@ -8,10 +8,10 @@
             <h2 class="text-xl font-semibold text-red-500 border-b-2 border-red-300 pb-2">✏️ 口コミを編集</h2>
 
             <!-- 保存済みの画像を表示 -->
-            @if($review->image)
+            @if($review->image_url)
             <div class="mb-4">
                 <label class="block text-red-500 font-semibold">現在の画像</label>
-                <img src="{{ asset('storage/' . $review->image) }}" alt="保存済み画像" class="w-full max-w-xs">
+                <img src="{{  $review->image_url }}" alt="保存済み画像" class="w-full max-w-xs">
             </div>
             @endif
 
