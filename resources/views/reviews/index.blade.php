@@ -47,7 +47,7 @@
                     </h2>
                     <p class="body text-gray-700 mb-4">{{ $review->body }}</p>
                     @if($review->image_path)
-                    <img src="{{ asset('storage/' . $review->image_path) }}" alt="レビュー画像" class="max-w-xs rounded mb-4">
+                    <img src="{{ $review->image_path }}" alt="レビュー画像" style="max-width: 300px;">
                     @endif
                     <div class="flex items-center justify-between">
                         <a href="/reviews/{{ $review->id }}" class="text-blue-500 hover:underline">
