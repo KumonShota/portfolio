@@ -3,7 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Models\Review;
-use App\Http\Requests\ReviewRequest;
+use App\Http\Requests\StoreReviewRequest;
+use App\Http\Requests\UpdateReviewRequest;
 use App\Models\Region;
 use App\Models\Store;
 use Illuminate\Http\Request;
@@ -37,7 +38,7 @@ class ReviewController extends Controller
         return view('reviews.create', compact('store'));
     }
 
-    public function store(ReviewRequest $request)
+    public function store(StoreReviewRequest $request)
     {
         // ReviewRequestでバリデーション済みデータを取得
         $input = $request->validated();
@@ -65,7 +66,7 @@ class ReviewController extends Controller
         return view('reviews.edit')->with(['review' => $review]);
     }
 
-    public function update(ReviewRequest $request, Review $review)
+    public function update(UpdateReviewRequest $request, Review $review)
     {
         $input = $request->validated();
         $review->update($input);
