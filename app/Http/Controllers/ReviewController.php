@@ -87,7 +87,7 @@ class ReviewController extends Controller
                 $filename = end($segments); // "orgquflk9bmz8cgfp50y.png"
                 $publicId = pathinfo($filename, PATHINFO_FILENAME); // "orgquflk9bmz8cgfp50y"
 
-                Cloudinary::destroy($publicId);
+                Cloudinary::destroy($publicId, ['resource_type' => 'image', 'invalidate' => true]);
             }
 
             // 新しい画像を Cloudinary にアップロードし、画像URLを取得
