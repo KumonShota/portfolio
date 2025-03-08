@@ -15,6 +15,6 @@ class RegionController extends Controller
     public function index()
     {
         $regions = Region::all();
-        return view('reviews.index', compact('regions'));
+        return view('review.index', compact('regions'));
     }
 }

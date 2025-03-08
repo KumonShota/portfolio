@@ -27,7 +27,7 @@
 
         <!-- 戻るボタン -->
         <div class="mt-6 text-center">
-            <a href="{{ route('regions.index') }}" class="text-red-500 font-semibold hover:underline">← 地方一覧に戻る</a>
+            <a href="{{ route('reviews.index') }}" class="text-red-500 font-semibold hover:underline">← 地方一覧に戻る</a>
         </div>
     </div>
 </body>
