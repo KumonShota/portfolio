@@ -37,33 +37,24 @@ class ReviewController extends Controller
         return view('reviews.create', compact('store'));
     }
 
-    public function store(Request $request)
+    public function store(ReviewRequest $request)
     {
+        // ReviewRequestでバリデーション済みデータを取得
+        $input = $request->validated();
 
-        $request->validate([
-            'review.title' => 'required|string|max:255',
-            'review.body' => 'required|string',
-            'review.store_id' => 'required|exists:stores,id',
-            'image' => 'nullable|image|mimes:jpeg,png,gif|max:10240',
-        ]);
+        // 画像がアップロードされている場合、Cloudinaryでアップロードしてパスを保存
+        if ($request->hasFile('image')) {
+            $input['image_url'] = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        }
 
-        $image_url = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+        // ログインユーザーのIDを付与
+        $input['user_id'] = auth()->id();
 
-
-        $input = $request['review'];
-
-        $review = Review::create([
-            'title' => $request->input('review.title'),
-            'body' => $request->input('review.body'),
-            'store_id' => $request->input('review.store_id'),
-            'user_id' => auth()->id(),
-            'stars' => $request->input('review.stars', 0),
-            'image_url' => $image_url,
-        ]);
+        // レビューを作成
+        $review = Review::create($input);
 
         return redirect()->route('reviews.index')->with('success', 'レビューを投稿しました！');
     }
-
     public function show(Review $review)
     {
         return view('reviews.show', compact('review'))->with(['review' => $review]);
