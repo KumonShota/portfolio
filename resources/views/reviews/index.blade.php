@@ -57,7 +57,7 @@
                             @if($review->isFavoritedByUser())
                             <form action="{{ route('reviews.unfavorite', ['review' => $review->id]) }}" method="POST">
                                 @csrf
-                                <button type="submit" class="text-yellow-500 text-xl">:星1:</button>
+                                <button type="submit" class="text-yellow-500 text-xl">:⭐:</button>
                             </form>
                             @else
                             <form action="{{ route('reviews.favorite', ['review' => $review->id]) }}" method="POST">
