@@ -49,8 +49,8 @@ class ReviewController extends Controller
         // 画像がアップロードされている場合はCloudinaryにアップロード
         if ($request->hasFile('image')) {
             $uploadResponse = Cloudinary::upload($request->file('image')->getRealPath());
-            $data['image_url'] = $uploadResponse->getSecurePath();
-            $data['image_public_id'] = $uploadResponse->getPublicId();
+            $data['image_url'] = $uploadResponse['secure_url'];
+            $data['image_public_id'] = $uploadResponse['public_id'];
         }
 
         // ログインユーザーのIDを追加
@@ -87,8 +87,8 @@ class ReviewController extends Controller
 
             // 新しい画像をCloudinaryにアップロードし、画像URLとpublic idを取得
             $uploadResponse = Cloudinary::upload($request->file('image')->getRealPath());
-            $data['image_url'] = $uploadResponse->getSecurePath();
-            $data['image_public_id'] = $uploadResponse->getPublicId();
+            $data['image_url'] = $uploadResponse['secure_url'];
+            $data['image_public_id'] = $uploadResponse['public_id'];
         }
 
         $review->update($data);
