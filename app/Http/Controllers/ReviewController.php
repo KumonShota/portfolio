@@ -40,22 +40,26 @@ class ReviewController extends Controller
 
     public function store(StoreReviewRequest $request)
     {
-        // ReviewRequestでバリデーション済みデータを取得
-        $input = $request->validated();
+        // バリデーション済みのデータを取得
+        $validated = $request->validated();
 
-        // 画像がアップロードされている場合、Cloudinaryでアップロードしてパスを保存
+        // ネストされた'review'配列を展開
+        $data = $validated['review'];
+
+        // 画像がアップロードされている場合はCloudinaryにアップロード
         if ($request->hasFile('image')) {
-            $input['image_url'] = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
+            $data['image_url'] = Cloudinary::upload($request->file('image')->getRealPath())->getSecurePath();
         }
 
-        // ログインユーザーのIDを付与
-        $input['user_id'] = auth()->id();
+        // ログインユーザーのIDを追加
+        $data['user_id'] = auth()->id();
 
-        // レビューを作成
-        $review = Review::create($input);
+        // レビュー作成
+        $review = Review::create($data);
 
         return redirect()->route('reviews.index')->with('success', 'レビューを投稿しました！');
     }
+
     public function show(Review $review)
     {
         return view('reviews.show', compact('review'))->with(['review' => $review]);
