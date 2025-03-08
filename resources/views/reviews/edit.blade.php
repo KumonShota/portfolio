@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="utf-8">
-    <title>edit</title>
-</head>
-
 <x-app-layout>
     <x-slot name="header">
         <h1 class="text-2xl font-bold text-center text-red-600">🍜 ラーメン好きのための口コミアプリ 🍜</h1>
@@ -15,7 +7,15 @@
         <div class="max-w-2xl mx-auto p-6 bg-white shadow-lg rounded-lg">
             <h2 class="text-xl font-semibold text-red-500 border-b-2 border-red-300 pb-2">✏️ 口コミを編集</h2>
 
-            <form action="/reviews/{{ $review->id }}" method="POST" class="space-y-4 mt-4">
+            <!-- 保存済みの画像を表示 -->
+            @if($review->image)
+            <div class="mb-4">
+                <label class="block text-red-500 font-semibold">現在の画像</label>
+                <img src="{{ asset('storage/' . $review->image) }}" alt="保存済み画像" class="w-full max-w-xs">
+            </div>
+            @endif
+
+            <form action="/reviews/{{ $review->id }}" method="POST" enctype="multipart/form-data" class="space-y-4 mt-4">
                 @csrf
                 @method('PUT')
 
@@ -35,6 +35,13 @@
                     <p class="text-red-500 text-sm">{{ $errors->first('review.body') }}</p>
                 </div>
 
+                <!-- 画像アップロード -->
+                <div>
+                    <label class="block text-red-500 font-semibold">📷 画像をアップロード</label>
+                    <input type="file" name="image" class="w-full p-2 border-2 border-yellow-300 rounded bg-white">
+                    <p class="text-red-500 text-sm">{{ $errors->first('image') }}</p>
+                </div>
+
                 <!-- 送信ボタン -->
                 <div class="text-center">
                     <input type="submit" value="✅ 保存する"
@@ -44,6 +51,3 @@
         </div>
     </body>
 </x-app-layout>
-
-
-</html>
