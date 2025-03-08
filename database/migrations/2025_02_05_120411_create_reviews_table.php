@@ -17,7 +17,6 @@ return new class extends Migration
             $table->foreignId('store_id')->constrained()->onDelete('cascade')->nullable()->change();
             $table->string('title');
             $table->text('body');
-            $table->integer('stars');
             $table->string('image_url')->nullable();
             $table->string('image_public_id')->nullable();
             $table->timestamps();
