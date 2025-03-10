@@ -101,6 +101,19 @@ class ReviewController extends Controller
     }
     public function destroy(Review $review)
     {
+
+
+
+        // 既に画像が設定されている場合、URLから public_id を抽出して Cloudinary から削除
+        if ($review->image_url) {
+            // 例: https://res.cloudinary.com/dcp7ygojd/image/upload/v1741409865/orgquflk9bmz8cgfp50y.png
+            $path = parse_url($review->image_url, PHP_URL_PATH); // "/dcp7ygojd/image/upload/v1741409865/orgquflk9bmz8cgfp50y.png"
+            $segments = explode('/', $path);
+            $filename = end($segments); // "orgquflk9bmz8cgfp50y.png"
+            $publicId = pathinfo($filename, PATHINFO_FILENAME); // "orgquflk9bmz8cgfp50y"
+
+            Cloudinary::destroy($publicId, ['resource_type' => 'image', 'invalidate' => true]);
+        }
         $review->delete();
         return redirect('/reviews')->with('success', 'レビューを削除しました');
     }

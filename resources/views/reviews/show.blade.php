@@ -1,14 +1,3 @@
-<!DOCTYPE HTML>
-<html lang="ja">
-
-<head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>Reviews</title>
-    <!-- Fonts -->
-    <link href="https://fonts.googleapis.com/css?family=Nunito:500,600" rel="stylesheet">
-</head>
-
 <x-app-layout>
     <x-slot name="header">
         <h1 class="text-2xl font-bold text-center text-red-600">🍜 ラーメン好きのための口コミアプリ 🍜</h1>
@@ -144,6 +133,3 @@
         </div>
     </body>
 </x-app-layout>
-
-
-</html>

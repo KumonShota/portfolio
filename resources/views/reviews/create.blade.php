@@ -1,11 +1,3 @@
-<!DOCTYPE html>
-<html lang="ja">
-
-<head>
-    <meta charset="utf-8">
-    <title>Review</title>
-</head>
-
 <x-app-layout>
     <x-slot name="header">
         <h1 class="text-2xl font-bold text-center text-red-600">🍜 口コミを投稿する 🍜</h1>
